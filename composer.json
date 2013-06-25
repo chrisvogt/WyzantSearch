@@ -1,0 +1,28 @@
+{
+    name: "chrisvogt/WyzantSearch",
+    description: "Wyzant Search API consumer for CakePHP.",
+    type: "cakephp-plugin",
+    keywords: [
+        "cakephp",
+        "wyzant",
+        "api consumer",
+        "cakephp plugin"
+    ],
+    homepage: "https://github.com/chrisvogt/WyzantSearch",
+    license: "MIT",
+    authors: [
+    {
+        name: "Chris Vogt",
+        homepage: "http://chrisvogt.me",
+        role: "Author"
+    }
+    ],
+    support: {
+        issues: "https://github.com/chrisvogt/WyzantSearch/issues",
+        source: "https://github.com/chrisvogt/WyzantSearch/cakephp_geshi"
+    },
+    require: {
+        php: ">=5.3.0",
+        composer/installers: "*"
+    }
+}
