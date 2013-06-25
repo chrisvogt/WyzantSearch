@@ -3,9 +3,20 @@
 /**
  * Wyzant Search API Datasource for CakePHP
  * 
- * @author Chris Vogt (c1v0)
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ * 
+ * @author Chris Vogt <@c1v0>
+ * @copyright (c) 2013 Chris Vogt
+ * @license http://opensource.org/licenses/MIT
  * @link http://github.com/chrisvogt
  * @link http://chrisvogt.me
+ * @since 0.9.0
  */
 App::uses('HttpSocket', 'Network/Http');
 App::import('Xml', 'String', 'Core');
@@ -37,13 +48,12 @@ class WyzantSearchSource extends DataSource {
  * Powers find()
  * 
  * @param Model $model
- * @param type $queryData
- * @param type $recursive
- * @return type
+ * @param array $queryData
+ * @param integer $recursive
+ * @return array
  * @throws CakeException
  */
     public function read(Model $model, $queryData = array(), $recursive = null) {
-
         if (!empty($queryData['queryParams'])) {
             $queryParams = http_build_query($queryData['queryParams']);
         }
@@ -68,14 +78,7 @@ class WyzantSearchSource extends DataSource {
             Cache::set(array('duration' => '+5 minutes'));
             Cache::write('sanitizedPath', $result, 'wyzant_search');
         }
-
-/**
- * Here we do the actual count as instructed by our calculate()
- * method above.
- * 
- * Returns the value of $i (see above).
- */
-        if ($queryData['fields'] === 'COUNT') {
+        if ($queryData['fields'] === 'COUNT') { # Counts, as instructed by calculate()
             return array(array(array('count' => count($items))));
         }
 
@@ -83,13 +86,13 @@ class WyzantSearchSource extends DataSource {
     }
 
 /**
- * calculate() is for determining how we will count the records and is
- * required to get ``update()`` and ``delete()`` to work.
+ * Determines how to count the records
  *
- * We don't count the records here but return a string to be passed to
- * ``read()`` which will do the actual counting. The easiest way is to just
- * return the string 'COUNT' and check for it in ``read()`` where
- * ``$data['fields'] === 'COUNT'``.
+ * Required to get ``update()`` and ``delete()`` to work.
+ *
+ * Returns a string to be passed to ``read()`` which will do the
+ * actual counting. The easiest way is to just return the string
+ * 'COUNT' and check for it in ``read()``where ``$data['fields'] === 'COUNT'``.
  */
     public function calculate(Model $model, $func, $params = array()) {
         return 'COUNT';
